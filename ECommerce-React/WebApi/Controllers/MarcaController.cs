@@ -18,7 +18,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Marca>>> GetMarcas()
         {
-            var marcas = await marcaRepository.GetAllAsync();
+            IReadOnlyList<Marca> marcas = await marcaRepository.GetAllAsync();
 
             return Ok(marcas);
         }
@@ -32,7 +32,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                var marca = await marcaRepository.GetByIdAsync(id.Value);
+                Marca marca = await marcaRepository.GetByIdAsync(id.Value);
 
                 if (marca != null)
                 {

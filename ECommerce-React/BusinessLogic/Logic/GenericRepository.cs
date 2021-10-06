@@ -13,11 +13,15 @@ namespace BusinessLogic.Logic
     {
         private readonly MarketDbContext context;
 
+        /*en esta interfaz se inyecta el contexto para la base de datos*/
         public GenericRepository(MarketDbContext context)
         {
             this.context = context;
         }
 
+        /*este metodo es para ser utilizado para cualquier clase a futuro
+         que requiera hacer uso de un listado de objetos, sin importar si esta relacionado
+        o no con otras entidades*/
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await context.Set<T>().ToListAsync();
@@ -28,6 +32,7 @@ namespace BusinessLogic.Logic
             return await ApplySpecification(spec).ToListAsync();
         }
 
+        /*obtener un registro por id de cualquier entidad*/
         public async Task<T> GetByIdAsync(int id)
         {
             return await context.Set<T>().FindAsync(id);
@@ -40,7 +45,12 @@ namespace BusinessLogic.Logic
 
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
-            return SpecificationEvaluator<T>.GetQuery(context.Set<T>().AsQueryable(), spec); 
+            return SpecificationEvaluator<T>.GetQuery(context.Set<T>().AsQueryable(), spec);
+        }
+
+        public async Task<int> CountAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).CountAsync();
         }
     }
 }

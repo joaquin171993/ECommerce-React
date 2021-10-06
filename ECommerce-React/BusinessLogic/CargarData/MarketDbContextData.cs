@@ -18,10 +18,10 @@ namespace BusinessLogic.CargarData
             {
                 if (!context.Marca.Any()) /*indica si no tiene algun valor al menos en la tabla*/
                 {
-                    var marcaData = File.ReadAllText("../BusinessLogic/CargarData/marca.json");
-                    var marcas = JsonSerializer.Deserialize<List<Marca>>(marcaData);
+                    string marcaData = File.ReadAllText("../BusinessLogic/CargarData/marca.json");
+                    List<Marca> marcas = JsonSerializer.Deserialize<List<Marca>>(marcaData);
 
-                    foreach (var marca in marcas)
+                    foreach (Marca marca in marcas)
                     {
                         await context.Marca.AddAsync(marca);
                     }
@@ -31,10 +31,10 @@ namespace BusinessLogic.CargarData
 
                 if (!context.Categoria.Any()) /*indica si no tiene algun valor al menos en la tabla*/
                 {
-                    var categoriaData = File.ReadAllText("../BusinessLogic/CargarData/categoria.json");
-                    var categorias = JsonSerializer.Deserialize<List<Categoria>>(categoriaData);
+                    string categoriaData = File.ReadAllText("../BusinessLogic/CargarData/categoria.json");
+                    List<Categoria> categorias = JsonSerializer.Deserialize<List<Categoria>>(categoriaData);
 
-                    foreach (var categoria in categorias)
+                    foreach (Categoria categoria in categorias)
                     {
                         await context.Categoria.AddAsync(categoria);
                     }
@@ -44,10 +44,10 @@ namespace BusinessLogic.CargarData
 
                 if (!context.Producto.Any()) /*indica si no tiene algun valor al menos en la tabla*/
                 {
-                    var productoData = File.ReadAllText("../BusinessLogic/CargarData/producto.json");
-                    var productos = JsonSerializer.Deserialize<List<Producto>>(productoData);
+                    string productoData = File.ReadAllText("../BusinessLogic/CargarData/producto.json");
+                    List<Producto> productos = JsonSerializer.Deserialize<List<Producto>>(productoData);
 
-                    foreach (var producto in productos)
+                    foreach (Producto producto in productos)
                     {
                         await context.Producto.AddAsync(producto);
                     }
@@ -57,7 +57,7 @@ namespace BusinessLogic.CargarData
             }
             catch (Exception e)
             {
-                var logger = loggerFactory.CreateLogger<MarketDbContextData>();
+                ILogger<MarketDbContextData> logger = loggerFactory.CreateLogger<MarketDbContextData>();
                 logger.LogError(e.Message);
             }
         }

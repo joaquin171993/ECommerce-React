@@ -19,7 +19,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Categoria>>> GetCategorias()
         {
-            var categorias = await categoriaRepository.GetAllAsync();
+            IReadOnlyList<Categoria> categorias = await categoriaRepository.GetAllAsync();
 
             return Ok(categorias);
         }
@@ -33,7 +33,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                var categoria = await categoriaRepository.GetByIdAsync(id.Value);
+                Categoria categoria = await categoriaRepository.GetByIdAsync(id.Value);
 
                 if (categoria != null)
                 {

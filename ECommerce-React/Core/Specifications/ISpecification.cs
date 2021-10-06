@@ -6,8 +6,20 @@ namespace Core.Specifications
 {
     public interface ISpecification<T>
     {
+        /*Representa la condicion logica de la consulta*/
         Expression<Func<T, bool>> Criteria { get; }
 
+        /*Representa la relacion entre las entidades*/
         List<Expression<Func<T, object>>> Includes { get; }
+
+        Expression<Func<T, object>> OrderBy { get; }
+
+        Expression<Func<T, object>> OrderByDescending { get; }
+
+        int Take { get; }
+
+        int Skip { get; }
+
+        bool IsPagingEnabled { get; }
     }
 }

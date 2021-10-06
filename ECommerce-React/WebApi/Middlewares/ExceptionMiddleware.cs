@@ -15,7 +15,7 @@ namespace WebApi.Middlewares
         private readonly ILogger<ExceptionMiddleware> _logger;
         private readonly IHostEnvironment _env;
 
-        public ExceptionMiddleware(RequestDelegate next, 
+        public ExceptionMiddleware(RequestDelegate next,
                                    ILogger<ExceptionMiddleware> logger,
                                    IHostEnvironment env)
         {
@@ -36,14 +36,14 @@ namespace WebApi.Middlewares
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                var response = _env.IsDevelopment() ? new CodeErrorException((int)HttpStatusCode.InternalServerError,
+                CodeErrorException response = _env.IsDevelopment() ? new CodeErrorException((int)HttpStatusCode.InternalServerError,
                                                                                 ex.Message,
                                                                                 ex.StackTrace.ToString())
                                                     : new CodeErrorException((int)HttpStatusCode.InternalServerError);
 
-                var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                JsonSerializerOptions options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
-                var json = JsonSerializer.Serialize(response, options);
+                string json = JsonSerializer.Serialize(response, options);
 
                 await context.Response.WriteAsync(json);
             }
